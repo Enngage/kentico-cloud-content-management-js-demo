@@ -4,4 +4,4 @@ This simple page shows how to create new items using [kentico-cloud-content-mana
 
 # How to use it?
 
-Just open `index.html` in your favorite browser (= Opera)
+Clone this repo and just open `index.html` in your favorite browser (= Opera)
