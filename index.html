@@ -20,40 +20,44 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/loader.css">
+	<link rel="stylesheet" type="text/css" href="css/site.css">
 	<!--===============================================================================================-->
 	<script type="text/javascript" src="https://unpkg.com/rxjs@6.3.3/bundles/rxjs.umd.min.js"></script>
 	<script type="text/javascript" src="https://unpkg.com/kentico-cloud-content-management@0.0.2/_bundles/kentico-cloud-cm-sdk.umd.min.js"></script>
 </head>
 
 <body>
-	<style>
-		input[type=date]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    display: none;
-}</style>
-
 	<div class="bg-contact100" style="background-image: url('images/bg-01.jpg');">
-		<div class="container-contact100">
 
+		<div class="container-contact100">
 			<div class="wrap-contact100">
-				<p id="ErrorMessage" style="display:none">
-				</p>
-				<p id="SuccessMessage" style="display:none">
-					Article has been created! You can see it in your Kentico Cloud project.
-				</p>
+
+				<div id="Loader" style="display:none" class="lds-dual-ring"></div>
+
+				<div id="ErrorMessage" style="display:none">
+				</div>
+				<div id="SuccessMessage" style="display:none">
+					<p>
+						Article has been created! You can see it in your Kentico Cloud project.
+					</p>
+					<p style="margin-top: 16px">
+						<a href="./index.html">Create another article</a>
+					</p>
+				</div>
 				<form class="contact100-form validate-form" id="ArticleForm">
 					<span class="contact100-form-title">
 						Create new article
 					</span>
 
-					
-					<div class="wrap-input100 validate-input" data-validate="Title is invalid">
-							<input style="margin-left: 16px"  checked type="radio" name="Language" value="en-US">
-							<label for="Language">English</label>
 
-							<input style="margin-left: 16px"  type="radio" name="Language" value="es-ES">
-							<label for="Language">Spanish</label>
-						</div>
+					<div class="wrap-input100 validate-input" data-validate="Title is invalid">
+						<input style="margin-left: 16px" checked type="radio" name="Language" value="en-US">
+						<label for="Language">English</label>
+
+						<input style="margin-left: 16px" type="radio" name="Language" value="es-ES">
+						<label for="Language">Spanish</label>
+					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Title is invalid">
 						<input class="input100" type="text" name="Title" placeholder="Title">

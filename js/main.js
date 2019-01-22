@@ -37,6 +37,8 @@
         }
 
         if (check) {
+            startLoader();
+
             // data is valid
             processFile(file, (uploadedFile) => {
                 let fileReference = [];
@@ -73,6 +75,15 @@
         });
     });
 
+    function startLoader() {
+        $('#Loader').show();
+        $('#ArticleForm').hide();
+    }
+
+    function stopLoader() {
+        $('#Loader').hide();
+    }
+
     function removeExtensionFromfilename(filename) {
         return filename.replace(/\.[^/.]+$/, '');
     }
@@ -100,7 +111,7 @@
             fileReader.onload = function () {
                 // get blob of file
                 // see https://www.npmjs.com/package/blob-util
-                var fileBinary = blobUtil.arrayBufferToBlob(fileReader.result)
+                var fileBinary = BlobUtil.arrayBufferToBlob(fileReader.result)
 
                 var subs = client.uploadBinaryFile().withData({
                     binaryData: fileBinary,
@@ -194,14 +205,14 @@
     }
 
     function handleSuccess() {
-        $('#SuccessMessage').show();
-        $('#ArticleForm').hide();
+        $('#SuccessMessage').show();       
+        stopLoader();
     }
 
     function handleError(err) {
         $('#ErrorMessage').show();
         $('#ErrorMessage').text('There was an unexpected error: ' + err.message);
-        $('#ArticleForm').hide();
+        stopLoader();
     }
 
     function validate(input) {
