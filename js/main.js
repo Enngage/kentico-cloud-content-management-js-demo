@@ -73,6 +73,10 @@
         });
     });
 
+    function removeExtensionFromfilename(filename) {
+        return filename.replace(/\.[^/.]+$/, '');
+    }
+
     function getAlphanumericString(val) {
         return val.replace(/[^0-9a-zA-Z]/g, '');
     }
@@ -89,6 +93,9 @@
         if (!file) {
             callback(undefined);
         } else {
+
+            var processedFilename = getAlphanumericString(removeExtensionFromfilename(file.name));
+
             var fileReader = new FileReader();
             fileReader.onload = function () {
                 // get blob of file
@@ -99,7 +106,7 @@
                     binaryData: fileBinary,
                     contentLength: file.size,
                     contentType: file.type,
-                    filename: getAlphanumericString(file.name)
+                    filename: processedFilename
                 })
                     .toObservable()
                     .pipe(
