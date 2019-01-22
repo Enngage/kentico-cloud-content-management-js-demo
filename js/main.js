@@ -73,6 +73,10 @@
         });
     });
 
+    function getAlphanumericString(val) {
+        return val.replace(/[^0-9a-zA-Z]/g, '');
+    }
+
     function getClient() {
         return new ContentManagementClient({
             projectId: '3da887f1-21a0-008c-bfc8-73ca634f2578',
@@ -95,7 +99,7 @@
                     binaryData: fileBinary,
                     contentLength: file.size,
                     contentType: file.type,
-                    filename: file.name
+                    filename: getAlphanumericString(file.name)
                 })
                     .toObservable()
                     .pipe(
