@@ -5,10 +5,48 @@
     // prepare rxjs
     var Rxjs = window['rxjs'];
     var BlobUtil = window['blobUtil'];
+    var Cookies = window['Cookies'];
+
+    init();
 
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100');
+    var clientInpus = $('.validate-client-input .input100');
+
+    $('#ResetLink').on('click', function(e) {
+        e.preventDefault();
+        Cookies.set('projectId', undefined);
+        Cookies.set('apiKey', undefined);
+        showClientConfiguration();
+    })
+
+    $('.validate-client-form').on('submit', function (e) {
+        e.preventDefault();
+        var check = true;
+
+        for (var i = 0; i < clientInpus.length; i++) {
+            if (validate(clientInpus[i]) == false) {
+                showValidate(clientInpus[i]);
+                check = false;
+            }
+        }
+
+        if (check) {
+            var projectId = $('input[name="ProjectId"]').val();
+            var apiKey = $('input[name="ApiKey"]').val();
+
+            if (!projectId || !apiKey) {
+                alert('Invalid project Id or Api key')
+                return;
+            }
+
+            Cookies.set('projectId', projectId, { expires: 7 });
+            Cookies.set('apiKey', apiKey, { expires: 7 });
+
+            showArticleForm();
+        }
+    });
 
     $('.validate-form').on('submit', function (e) {
         e.preventDefault();
@@ -63,8 +101,6 @@
             });
         }
 
-
-
         return check;
     });
 
@@ -93,14 +129,48 @@
     }
 
     function getClient() {
+        var projectId = Cookies.get('projectId');
+        var apiKey = Cookies.get('apiKey');
+
+        if (!projectId || !apiKey) {
+            return undefined;
+        }
+
         return new ContentManagementClient({
-            projectId: '3da887f1-21a0-008c-bfc8-73ca634f2578',
-            apiKey: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3NWM1OGI2ZTNhZTU0ZDNlYjAwNmE3MTg1MDQyNjNmMCIsImlhdCI6IjE1NDgwNjk0NzgiLCJleHAiOiIxNTU1ODQ1NDc4IiwicHJvamVjdF9pZCI6IjNkYTg4N2YxMjFhMDAwOGNiZmM4NzNjYTYzNGYyNTc4IiwidmVyIjoiMi4xLjAiLCJ1aWQiOiJ1c3JfMHZRWUJDcUF2cm5vNXJpZkhuaVlFRyIsImF1ZCI6Im1hbmFnZS5rZW50aWNvY2xvdWQuY29tIn0.jEBlTFcaa8r-bg9J_pc0N5T-u4_axnMHyx-29jbkyaI'
+            projectId: projectId,
+            apiKey: apiKey
         });
+    }
+
+    function init() {
+        var client = getClient();
+        if (client) {
+            showArticleForm();
+        } else {
+            showClientConfiguration();
+        }
+    }
+
+    function showClientConfiguration() {
+        $('#ClientConfiguration').show();
+        $('#ArticleForm').hide();
+    }
+
+    function showArticleForm() {
+        $('#ArticleForm').show();
+        $('#ClientConfiguration').hide();
+        showCurrentProjectId();
+    }
+
+    function showCurrentProjectId() {
+        var projectId = Cookies.get('projectId');
+        $('#CurrentProjectId').text(projectId);
+        $('#CurrentProjectId').show();
     }
 
     function processFile(file, callback) {
         var client = getClient();
+
         if (!file) {
             callback(undefined);
         } else {

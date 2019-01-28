@@ -31,6 +31,7 @@
 	<div class="bg-contact100" style="background-image: url('images/bg-01.jpg');">
 
 		<div class="container-contact100">
+
 			<div class="wrap-contact100">
 
 				<div id="Loader" style="display:none" class="lds-dual-ring"></div>
@@ -45,11 +46,43 @@
 						<a href="./index.html">Create another article</a>
 					</p>
 				</div>
-				<form class="contact100-form validate-form" id="ArticleForm">
+				<form class="contact100-form validate-client-form" id="ClientConfiguration" style="display:none">
+
+					<span class="contact100-form-title">
+						Configure Dancing goat sample project
+					</span>
+
+					<div class="wrap-input100 validate-client-input" data-validate="Invalid project id">
+						<input class="input100" type="text" name="ProjectId" placeholder="ProjectId">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-font" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-client-input" data-validate="Invalid api key">
+						<input class="input100" type="text" name="ApiKey" placeholder="Content management Api key">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-font" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="container-contact100-form-btn">
+						<button type="submit" class="contact100-form-btn">
+							Set
+						</button>
+					</div>
+
+				</form>
+				<form class="contact100-form validate-form" id="ArticleForm" style="display:none">
 					<span class="contact100-form-title">
 						Create new article
 					</span>
 
+					<div class="project-info">
+						For project: <em><span id="CurrentProjectId"></span></em> (<a href="#" id="ResetLink">Reset</a>)
+					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Title is invalid">
 						<input style="margin-left: 16px" checked type="radio" name="Language" value="en-US">
@@ -114,10 +147,16 @@
 							Submit
 						</button>
 					</div>
+
 				</form>
+
+
 			</div>
+
 		</div>
 	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
 	<script src="https://unpkg.com/blob-util/dist/blob-util.min.js"></script>
 
